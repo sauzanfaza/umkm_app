@@ -1,7 +1,7 @@
-import Sidebar from "../Components/Sidebar"
-import Navbar from "../Components/Navbar"
+import Sidebar from "../Components/Sidebar";
+import Navbar from "../Components/Navbar";
 
-export default function ClosingHarian() {
+export default function Laporan() {
     return(
         <div className="flex">
                     {/* sidebar */}
@@ -14,7 +14,7 @@ export default function ClosingHarian() {
         
                         {/* content */}
                         <div className="p-4">
-                            Closing
+                            Laporan
                         </div>
                     </div>
                 </div>

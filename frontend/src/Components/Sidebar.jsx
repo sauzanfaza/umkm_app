@@ -12,7 +12,7 @@ export default function Sidebar() {
     
       return (
         <>
-        <aside className="flex flex-col w-64 h-screen bg-[#004030] text-white p-4">
+        <aside className="flex flex-col w-64 min-h-screen bg-[#004030] text-white p-4">
             <div className="text-center font-semibold mb-18 mt-10">
                 <h1>Toko Kue Bu Imas</h1>
             </div>
@@ -22,7 +22,7 @@ export default function Sidebar() {
                 <Link to="/produk" className={menuClass}><LuCakeSlice /> Produk</Link>
                 <Link to="/penjualanHarian" className={menuClass}><LuClipboardList /> Penjualan Harian</Link>
                 <Link to="/closingHarian" className={menuClass}><FaRegCalendarCheck />Closing Harian</Link>
-                <Link to="/closingHarian" className={menuClass}><GoChecklist /> Laporan</Link>
+                <Link to="/laporan" className={menuClass}><GoChecklist /> Laporan</Link>
             </nav>
         </aside>
         </>
