@@ -10,9 +10,10 @@ exports.getProduk = (req, res) => {
     })
 }
 
+
 //tambah produk
 exports.createProduk = (req, res) => {
-    // console.log("BODY: ", req.body) debugging
+    // console.log("BODY: ", req.body) //cek
     const {nama_produk, harga} = req.body
 
     const sql = `INSERT INTO produk (nama_produk, harga) VALUES (?, ?)`

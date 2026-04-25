@@ -61,10 +61,10 @@ export default function EditProduk({ data, open, onClose, onSuccess }) {
           />
 
           <div className="flex justify-end gap-2">
-            <button type="button" onClick={onClose}>
+            <button type="button" onClick={onClose} className="cursor-pointer">
               Batal
             </button>
-            <button className="bg-green-600 text-white px-3 py-1 rounded">
+            <button className="bg-[#004030] hover:bg-[#346739] cursor-pointer text-white px-3 py-1 rounded">
               Simpan
             </button>
           </div>
