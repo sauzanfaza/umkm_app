@@ -22,7 +22,7 @@ export default function TambahStok({ onSuccess }) {
         {/* BUTTON */}
         <button 
             onClick={() => setOpen(true)}
-            className="bg-green-600 text-white px-4 py-2 rounded-lg cursor-pointer"
+            className="bg-[#004030] hover:bg-[#346739] text-white px-4 py-2 rounded-lg cursor-pointer"
         >
             + tambah stok
         </button>
@@ -53,13 +53,13 @@ export default function TambahStok({ onSuccess }) {
                                 ))}
                             </div>
 
-                            <div className="flex justify-end gap-2 mt-4">
+                            <div className="flex justify-end gap-2 mt-4 cursor-pointer">
                                 <button onClick={() => setOpen(false)}>Batal</button>
 
                                 <button 
                                     disabled={!selected}
                                     onClick={() => setStep(2)}
-                                    className="bg-green-600 text-white px-3 py-1 rounded disabled:bg-gray-400"
+                                    className="bg-[#004030] hover:bg-[#346739] cursor-pointer text-white px-3 py-1 rounded disabled:bg-gray-400"
                                 >
                                     Lanjut
                                 </button>
@@ -84,14 +84,14 @@ export default function TambahStok({ onSuccess }) {
                                 className="w-full p-2 border rounded"
                             />
 
-                            <div className="flex justify-between mt-4">
+                            <div className="flex justify-between mt-4 cursor-pointer">
                                 <button onClick={() => setStep(1)}>
                                     Kembali
                                 </button>
 
                                 <button 
                                     disabled={!stok}
-                                    className="bg-green-600 text-white px-3 py-1 rounded disabled:bg-gray-400"
+                                    className="bg-[#004030] hover:bg-[#346739] cursor-pointer text-white px-3 py-1 rounded disabled:bg-gray-400"
                                     onClick={async () => {
                                         try {
                                             await axios.post("http://localhost:3000/penjualan", {
