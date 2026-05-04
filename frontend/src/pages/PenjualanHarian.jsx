@@ -129,7 +129,7 @@ export default function PenjualanHarian() {
             <Sidebar />
 
             <div className="flex-1">
-                <Navbar>
+                <Navbar title="Penjualan Harian">
                     <span className="text-slate-500 text-sm font-medium mr-4">{tanggal}</span>
                     <TambahStok onSuccess={getData} />
                 </Navbar>

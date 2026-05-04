@@ -2,8 +2,8 @@ import Sidebar from "../Components/Sidebar";
 import Navbar from "../Components/Navbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import * as XLSX from "xlsx";
-import { saveAs } from "file-saver";
+import ExcelJS from "exceljs"
+import { saveAs } from "file-saver"
 
 export default function Laporan() {
     const [data, setData] = useState([])
@@ -62,45 +62,77 @@ export default function Laporan() {
     const totalPendapatan = data.reduce((sum, item) => sum + (Number(item.subtotal) || 0), 0)
 
     // Export Excel
-    const handleExport = () => {
-        if (data.length === 0) return alert("Tidak ada data untuk diexport")
+    const handleExport = async () => {
+    if (data.length === 0) return alert("Tidak ada data untuk diexport")
 
-        const exportData = data.map((item, index) => ({
-            "No": index + 1,
-            "Nama Produk": item.nama_produk,
-            "Harga Satuan": item.harga,
-            "Stok Awal": item.stok_awal,
-            "Stok Akhir": item.stok_akhir,
-            "Terjual": item.jumlah_terjual,
-            "SubTotal (Rp)": item.subtotal
-        }))
+    const workbook = new ExcelJS.Workbook()
+    const sheet = workbook.addWorksheet("Laporan")
 
-        exportData.push({
-            "No": "",
-            "Nama Produk": "TOTAL",
-            "Harga Satuan": "",
-            "Stok Awal": "",
-            "Stok Akhir": "",
-            "Terjual": totalTerjual,
-            "SubTotal (Rp)": totalPendapatan
+    // Header kolom
+    sheet.columns = [
+        { header: "No", key: "no", width: 5 },
+        { header: "Nama Produk", key: "nama_produk", width: 25 },
+        { header: "Harga Satuan", key: "harga", width: 15 },
+        { header: "Stok Awal", key: "stok_awal", width: 12 },
+        { header: "Stok Akhir", key: "stok_akhir", width: 12 },
+        { header: "Terjual", key: "terjual", width: 10 },
+        { header: "SubTotal (Rp)", key: "subtotal", width: 18 },
+    ]
+
+    // Style header
+    sheet.getRow(1).eachCell((cell) => {
+        cell.font = { bold: true }
+        cell.fill = {
+            type: "pattern",
+            pattern: "solid",
+            fgColor: { argb: "FFE2E8F0" }
+        }
+    })
+
+    // Isi data
+    data.forEach((item, index) => {
+        sheet.addRow({
+            no: index + 1,
+            nama_produk: item.nama_produk,
+            harga: item.harga,
+            stok_awal: item.stok_awal,
+            stok_akhir: item.stok_akhir,
+            terjual: item.jumlah_terjual,
+            subtotal: item.subtotal
         })
+    })
 
-        const ws = XLSX.utils.json_to_sheet(exportData)
-        const wb = XLSX.utils.book_new()
-        XLSX.utils.book_append_sheet(wb, ws, "Laporan")
+    // Baris total
+    const totalRow = sheet.addRow({
+        no: "",
+        nama_produk: "TOTAL",
+        harga: "",
+        stok_awal: "",
+        stok_akhir: "",
+        terjual: totalTerjual,
+        subtotal: totalPendapatan
+    })
+    totalRow.eachCell((cell) => {
+        cell.font = { bold: true }
+        cell.fill = {
+            type: "pattern",
+            pattern: "solid",
+            fgColor: { argb: "FFD1FAE5" } // hijau muda
+        }
+    })
 
-        const fileName = `Laporan_${selectedTanggal}.xlsx`
-        const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" })
-        const blob = new Blob([excelBuffer], { type: "application/octet-stream" })
-        saveAs(blob, fileName)
-    }
+    // Download
+    const buffer = await workbook.xlsx.writeBuffer()
+    const blob = new Blob([buffer], { type: "application/octet-stream" })
+    saveAs(blob, `Laporan_${selectedTanggal}.xlsx`)
+}
 
     return (
         <div className="flex">
             <Sidebar />
 
             <div className="flex-1 flex flex-col h-screen">
-                <Navbar />
+                <Navbar title="Laporan"></Navbar>
 
                 <div className="p-6 flex-1 overflow-hidden flex flex-col">
                     {/* Ringkasan */}

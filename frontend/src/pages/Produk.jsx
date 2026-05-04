@@ -7,6 +7,7 @@ import { BiEdit } from "react-icons/bi";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import TambahProduk from "../Components/TambahProduk";
 import EditProduk from "../Components/EditProduk";
+import { useSearch } from "../../SearchContext";
 
 export default function Produk() {
   const [produk, setProduk] = useState([]);
@@ -14,6 +15,7 @@ export default function Produk() {
   const [openEdit, setOpenEdit] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
+  const {keyword} = useSearch()
 
   useEffect(() => {
     getProduk();
@@ -44,10 +46,15 @@ export default function Produk() {
     }
   };
 
+  //filter data dari searchbar
+  const filteredProduk = produk.filter((item) =>
+  item.nama_produk.toLowerCase().includes(keyword.toLowerCase())
+);
+
   // Hitung pagination
   const totalPages = Math.ceil(produk.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentData = produk.slice(startIndex, startIndex + itemsPerPage);
+  const currentData = filteredProduk.slice(startIndex, startIndex + itemsPerPage);
 
   return (
     <div className="flex">
