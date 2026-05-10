@@ -82,7 +82,7 @@ exports.updatePenjualan = (req, res) => {
     const jumlah_terjual = Number(req.body.jumlah_terjual) || 0;
     const subtotal = Number(req.body.subtotal) || 0;
 
-    // 2. Debugging: Cek di terminal (cmd) apakah angkanya masuk atau NaN
+    // 2. Debugging: cek di cmd apakah angkanya masuk atau NaN
     console.log(`Update ID ${id}: Terjual ${jumlah_terjual}, Subtotal ${subtotal}`);
 
     const sql = `
@@ -97,7 +97,7 @@ exports.updatePenjualan = (req, res) => {
             return res.status(500).json(err);
         }
         
-        // 3. Pastikan ID-nya benar-benar ada yang ter-update
+        // 3. Pastikan id nya benaran ada yang ter update
         if (result.affectedRows === 0) {
             return res.status(404).json({ message: "Data tidak ditemukan" });
         }
